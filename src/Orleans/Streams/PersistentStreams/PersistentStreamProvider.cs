@@ -45,11 +45,13 @@ namespace Orleans.Providers.Streams.Common
         internal const PersistentStreamProviderState StartupStateDefaultValue = PersistentStreamProviderState.AgentsStarted;
         private PersistentStreamProviderState startupState;
 
-        public string                   Name { get; private set; }
+        public string Name { get; private set; }
+        private ProviderState State { get; set; }
         public bool IsRewindable { get { return queueAdapter.IsRewindable; } }
 
         public async Task Init(string name, IProviderRuntime providerUtilitiesManager, IProviderConfiguration config)
         {
+            if (State == ProviderState.Initialized) return;
             if (String.IsNullOrEmpty(name)) throw new ArgumentNullException("name");
             if (providerUtilitiesManager == null) throw new ArgumentNullException("providerUtilitiesManager");
             if (config == null) throw new ArgumentNullException("config");
@@ -77,10 +79,12 @@ namespace Orleans.Providers.Streams.Common
                 queueAdapter.Name,
                 myConfig,
                 StartupStatePropertyName, startupState);
+            State = ProviderState.Initialized;
         }
 
         public async Task Start()
         {
+            if (State == ProviderState.Started) return;
             if (queueAdapter.Direction.Equals(StreamProviderDirection.ReadOnly) ||
                 queueAdapter.Direction.Equals(StreamProviderDirection.ReadWrite))
             {
@@ -94,15 +98,18 @@ namespace Orleans.Providers.Streams.Common
                         await pullingAgentManager.StartAgents();
                 }
             }
+            State = ProviderState.Started;
         }
 
         public async Task Close()
         {
+            if (State == ProviderState.Closed) return;
             var siloRuntime = providerRuntime as ISiloSideStreamProviderRuntime;
             if (siloRuntime != null)
             {
                 await pullingAgentManager.Stop();
             }
+            State = ProviderState.Closed;
         }
 
         public IAsyncStream<T> GetStream<T>(Guid id, string streamNamespace)

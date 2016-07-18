@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using Orleans.Runtime.MembershipService;
 using Orleans.MultiCluster;
+using Orleans.Runtime.Configuration;
 
 
 namespace Orleans.Runtime.Management
@@ -176,6 +177,13 @@ namespace Orleans.Runtime.Management
                     await Task.WhenAll(silos.Skip(1).Select(s => GetSiloControlReference(s).UpdateConfiguration(xml)));
                 }
             }
+        }
+
+        public async Task UpdateStreamProviders(SiloAddress[] hostIds, IDictionary<string, ProviderCategoryConfiguration> streamProviderConfigurations)
+        {
+            SiloAddress[] silos = GetSiloAddresses(hostIds);
+            List<Task> actionPromises = PerformPerSiloAction(silos, s => GetSiloControlReference(s).UpdateStreamProviders(streamProviderConfigurations));
+            await Task.WhenAll(actionPromises);
         }
 
         public async Task<int> GetTotalActivationCount()

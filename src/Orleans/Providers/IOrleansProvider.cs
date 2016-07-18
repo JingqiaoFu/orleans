@@ -1,11 +1,20 @@
-
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using System.Runtime.Serialization;
+using Orleans.Runtime;
 
 namespace Orleans.Providers
 {
+    internal enum ProviderState
+    {
+        None,
+        Initialized,
+        Started,
+        Stopped,
+        Closed
+    }
     #pragma warning disable 1574
     /// <summary>
     /// Base interface for all type-specific provider interfaces in Orleans
@@ -18,7 +27,7 @@ namespace Orleans.Providers
         string Name { get; }
 
         /// <summary>
-        /// Initialization function called by Orleans Provider Manager when a new provider class instance  is created
+        /// Initialization function called by Orleans Provider Manager when a new provider class instance is created
         /// </summary>
         /// <param name="name">Name assigned for this provider</param>
         /// <param name="providerRuntime">Callback for accessing system functions in the Provider Runtime</param>
@@ -159,5 +168,24 @@ namespace Orleans.Providers
             string s;
             return config.Properties.TryGetValue(key, out s) ? TimeSpan.Parse(s) : settingDefault;
         }
+    }
+
+    /// <summary>
+    /// Exception thrown whenever a provider has failed to be initialized.
+    /// </summary>
+    [Serializable]
+    public class ProviderInitializationException : OrleansException
+    {
+        public ProviderInitializationException()
+        { }
+        public ProviderInitializationException(string msg)
+            : base(msg)
+        { }
+        public ProviderInitializationException(string msg, Exception exc)
+            : base(msg, exc)
+        { }
+        protected ProviderInitializationException(SerializationInfo info, StreamingContext context)
+            : base(info, context)
+        { }
     }
 }

@@ -7,7 +7,7 @@ namespace Orleans
 {
     /// <summary>
     /// A utility class that provides serial execution of async functions.
-    /// In can be used inside reentrant grain code to execute some methods in a non-reentrant (serial) way.
+    /// It can be used inside reentrant grain code to execute some methods in a non-reentrant (serial) way.
     /// </summary>
     public class AsyncSerialExecutor
     {
