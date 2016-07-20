@@ -118,6 +118,7 @@
     <Compile Include="ConnectionStringFixture.cs" />
     <Compile Include="HostedTestClusterBase.cs" />
     <Compile Include="OrleansRuntime\Streams\SubscriptionMarkerTests.cs" />
+    <Compile Include="StreamingTests\PubSubRendezvousGrainTests.cs" />
     <Compile Include="SqlStatisticsPublisherTests\SqlStatisticsPublisherTestsBase.cs" />
     <Compile Include="StorageTests\AzureStorageBasicTestFixture.cs" />
     <Compile Include="CodeGeneratorTests_TakeSerializedData.cs" />
@@ -156,6 +157,11 @@
     <Compile Include="General\LruTest.cs" />
     <Compile Include="General\RequestContextTest.cs" />
     <Compile Include="General\TestingBootstrapProviders.cs" />
+    <Compile Include="GeoClusterTests\AzureGossipTableTests.cs" />
+    <Compile Include="GeoClusterTests\BasicMultiClusterTest.cs" />
+    <Compile Include="GeoClusterTests\GatewaySelectionTest.cs" />
+    <Compile Include="GeoClusterTests\MultiClusterNetworkTests.cs" />
+    <Compile Include="GeoClusterTests\TestingClusterHost.cs" />
     <Compile Include="LivenessTests\ConsistentRingProviderTests.cs" />
     <Compile Include="OrleansRuntime\Streams\CachedMessageBlockTests.cs" />
     <Compile Include="OrleansRuntime\Streams\FixedSizeBufferTests.cs" />
@@ -167,8 +173,6 @@
     <Compile Include="Serialization\BuiltInSerializerTests.cs" />
     <Compile Include="General\Identifiertests.cs" />
     <Compile Include="General\InterfaceRules.cs" />
-    <Compile Include="GeoClusterTests\BasicMultiClusterTest.cs" />
-    <Compile Include="GeoClusterTests\TestingClusterHost.cs" />
     <Compile Include="GrainReferenceCacheTests.cs" />
     <Compile Include="GrainReferenceCastTests.cs" />
     <Compile Include="GrainReferenceTest.cs" />

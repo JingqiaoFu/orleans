@@ -18,13 +18,13 @@ namespace Orleans.Runtime
         private readonly StreamProviderManager streamProviderManager;
         private readonly List<IProvider> allSiloProviders;
         private readonly IDictionary<string, ProviderCategoryConfiguration> providerConfigurations;
-        private readonly TraceLogger logger;
+        private readonly Logger logger;
         private readonly AsyncSerialExecutor nonReentrancyGuarantor;
 
         public StreamProviderManagerAgent(Silo silo, List<IProvider> allSiloProviders)
             : base(Constants.StreamProviderManagerAgentSystemTargetId, silo.SiloAddress)
         {
-            logger = TraceLogger.GetLogger("StreamProviderUpdateAgent", TraceLogger.LoggerType.Runtime);
+            logger = LogManager.GetLogger("StreamProviderUpdateAgent", LoggerType.Runtime);
             this.streamProviderManager = (StreamProviderManager)silo.StreamProviderManager;
             providerConfigurations = silo.GlobalConfig.ProviderConfigurations;
             this.allSiloProviders = allSiloProviders;

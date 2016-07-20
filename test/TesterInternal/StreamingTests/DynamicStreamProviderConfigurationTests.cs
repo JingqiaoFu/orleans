@@ -69,7 +69,6 @@ namespace UnitTests.StreamingTests
             fixture.DefaultStreamProviderSettings.Remove(FailureInjectionStreamProvider.FailureInjectionModeString);
         }
 
-
         public DynamicStreamProviderConfigurationTests(Fixture fixture)
         {
             this.fixture = fixture;
