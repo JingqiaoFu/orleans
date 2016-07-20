@@ -36,7 +36,7 @@ namespace Orleans.Runtime
         public static readonly GrainId TypeManagerId = GrainId.GetSystemTargetGrainId(17);
         public static readonly GrainId ProviderManagerSystemTargetId = GrainId.GetSystemTargetGrainId(19);
         public static readonly GrainId DeploymentLoadPublisherSystemTargetId = GrainId.GetSystemTargetGrainId(22);
-        public static readonly GrainId StreamProviderUpdateAgentSystemTargetId = GrainId.GetSystemTargetGrainId(23);
+        public static readonly GrainId StreamProviderManagerAgentSystemTargetId = GrainId.GetSystemTargetGrainId(23);
 
         public const int PULLING_AGENTS_MANAGER_SYSTEM_TARGET_TYPE_CODE = 254;
         public const int PULLING_AGENT_SYSTEM_TARGET_TYPE_CODE = 255;

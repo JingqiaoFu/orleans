@@ -13,7 +13,6 @@ namespace Orleans.Providers
         None,
         Initialized,
         Started,
-        Stopped,
         Closed
     }
     internal class ProviderStateManager
@@ -48,27 +47,21 @@ namespace Orleans.Providers
                         case ProviderState.None:
                             throw new ProviderStateException("Trying to start a provider that hasn't been initialized.");
                         case ProviderState.Initialized:
-                        case ProviderState.Stopped:
                             return true;
                         case ProviderState.Closed:
-                            // Is this correct?
                             throw new ProviderStateException("Trying to start a provider that has been closed.");
                     }
                     break;
 
-                case ProviderState.Stopped:
+                case ProviderState.Closed:
                     switch (State)
                     {
                         case ProviderState.None:
+                            throw new ProviderStateException("Trying to close a provider that hasn't been initialized.");
                         case ProviderState.Initialized:
-                            throw new ProviderStateException("Trying to stop a provider that hasn't been started. Current state:" + State.ToString());
                         case ProviderState.Started:
                             return true;
                     }
-                    break;
-
-                case ProviderState.Closed:
-                    // TODO: What's the action supposed to be here?
                     return true;
             }
 

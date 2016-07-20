@@ -13,7 +13,7 @@ namespace Orleans.Runtime
     /// <summary>
     /// System target that specifically handles runtime adding/removing stream providers.
     /// </summary>
-    internal class StreamProviderUpdateAgent : SystemTarget, IStreamProviderUpdateAgent
+    internal class StreamProviderManagerAgent : SystemTarget, IStreamProviderManagerAgent
     {
         private readonly StreamProviderManager streamProviderManager;
         private readonly List<IProvider> allSiloProviders;
@@ -21,8 +21,8 @@ namespace Orleans.Runtime
         private readonly TraceLogger logger;
         private readonly AsyncSerialExecutor nonReentrancyGuarantor;
 
-        public StreamProviderUpdateAgent(Silo silo, List<IProvider> allSiloProviders)
-            : base(Constants.StreamProviderUpdateAgentSystemTargetId, silo.SiloAddress)
+        public StreamProviderManagerAgent(Silo silo, List<IProvider> allSiloProviders)
+            : base(Constants.StreamProviderManagerAgentSystemTargetId, silo.SiloAddress)
         {
             logger = TraceLogger.GetLogger("StreamProviderUpdateAgent", TraceLogger.LoggerType.Runtime);
             this.streamProviderManager = (StreamProviderManager)silo.StreamProviderManager;

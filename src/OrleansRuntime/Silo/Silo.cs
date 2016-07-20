@@ -335,7 +335,7 @@ namespace Orleans.Runtime
             RegisterSystemTarget(new SiloControl(this));
 
             logger.Verbose("Creating {0} System Target", "StreamProviderUpdateAgent");
-            RegisterSystemTarget(new StreamProviderUpdateAgent(this, allSiloProviders));
+            RegisterSystemTarget(new StreamProviderManagerAgent(this, allSiloProviders));
 
             logger.Verbose("Creating {0} System Target", "DeploymentLoadPublisher");
             RegisterSystemTarget(DeploymentLoadPublisher.Instance);
@@ -576,8 +576,8 @@ namespace Orleans.Runtime
         /// </summary>
         public async Task UpdateStreamProviders(IDictionary<string, ProviderCategoryConfiguration> streamProviderConfigurations)
         {
-            IStreamProviderUpdateAgent streamProviderUpdateAgent = 
-                InsideRuntimeClient.Current.InternalGrainFactory.GetSystemTarget<IStreamProviderUpdateAgent>(Constants.StreamProviderUpdateAgentSystemTargetId, this.SiloAddress);
+            IStreamProviderManagerAgent streamProviderUpdateAgent = 
+                InsideRuntimeClient.Current.InternalGrainFactory.GetSystemTarget<IStreamProviderManagerAgent>(Constants.StreamProviderManagerAgentSystemTargetId, this.SiloAddress);
 
             await scheduler.QueueTask(() => streamProviderUpdateAgent.UpdateStreamProviders(streamProviderConfigurations), providerManagerSystemTarget.SchedulingContext)
                     .WithTimeout(initTimeout);
